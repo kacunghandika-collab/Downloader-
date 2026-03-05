@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Asisten Dika Boy</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e5e5e5;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* MAIN CONTAINER */
+        #app {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a1929;
+        }
+
+        /* LOGIN PAGE */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+            margin: 16px;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #0A5CFF, #0A3C9F);
+            padding: 48px 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .login-header i {
+            font-size: 72px;
+            margin-bottom: 16px;
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 60px;
+        }
+
+        .login-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .login-form {
+            padding: 32px 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #0A5CFF;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(10,92,255,0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: #0A5CFF;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            background: #0A3C9F;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(10,92,255,0.3);
+        }
+
+        .dev-contact {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .dev-contact a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .dev-contact a:hover {
+            color: #0A5CFF;
+        }
+
+        /* CHAT PAGE */
+        .chat-container {
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .chat-header {
+            background: #0A5CFF;
+            padding: 16px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            min-height: 70px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .back-btn i {
+            font-size: 24px;
+        }
+
+        .chat-avatar {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-info h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .chat-info p {
+            font-size: 12px;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chat-info .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        /* MENU TITIK TIGA */
+        .menu-container {
+            position: relative;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .menu-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .menu-btn i {
+            font-size: 24px;
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-width: 240px;
+            display: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .menu-dropdown.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        .menu-item {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #1e293b;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #f1f5f9;
+        }
+
+        .menu-item i {
+            width: 24px;
+            color: #0A5CFF;
+            font-size: 18px;
+        }
+
+        .menu-item .phone-number {
+            font-family: 'Inter', monospace;
+            font-weight: 600;
+            color: #0A5CFF;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 8px 0;
+        }
+
+        /* CHAT MESSAGES */
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #e5e5e5;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            max-width: 85%;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            background: #0A5CFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: #1e293b;
+        }
+
+        .message-content {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 20px;
+            border-top-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 14px;
+            line-height: 1.5;
+            color: #1e293b;
+            word-break: break-word;
+        }
+
+        .message.user .message-content {
+            background: #0A5CFF;
+            color: white;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .message.user .message-time {
+            color: #94a3b8;
+        }
+
+        /* CHAT INPUT AREA */
+        .chat-input-area {
+            padding: 16px 20px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            min-height: 80px;
+        }
+
+        .chat-input-wrapper {
+            flex: 1;
+            background: white;
+            border-radius: 30px;
+            padding: 4px 4px 4px 20px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .chat-input-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 0;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .chat-input-wrapper button {
+            width: 44px;
+            height: 44px;
+            background: #0A5CFF;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-input-wrapper button:hover {
+            background: #0A3C9F;
+            transform: scale(1.05);
+        }
+
+        .chat-input-wrapper button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* TYPING INDICATOR */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 20px;
+            border-top-left-radius: 4px;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 10px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* API HINT */
+        .api-key-hint {
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+            padding: 8px;
+            background: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .api-key-hint i {
+            color: #0A5CFF;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 12px;
+            }
+            
+            .chat-header {
+                padding: 12px 16px;
+            }
+            
+            .chat-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .chat-info h2 {
+                font-size: 16px;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .menu-dropdown {
+                min-width: 200px;
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- LOGIN PAGE -->
+        <div class="login-container" id="loginPage">
+            <div class="login-header">
+                <i class="fas fa-robot"></i>
+                <h1>DIX BOT</h1>
+                <p>Asisten Dika</p>
+            </div>
+            
+            <div class="login-form">
+                <div class="input-group">
+                    <label><i class="fas fa-user" style="margin-right: 6px;"></i> USERNAME</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Enter username" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-lock" style="margin-right: 6px;"></i> PASSWORD</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter password">
+                    </div>
+                </div>
+
+                <button class="login-btn" onclick="handleLogin()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    MASUK CHAT
+                </button>
+
+                <div class="dev-contact">
+                    <a href="BELI PW/USN KE NO INI"><i class="fas fa-phone-alt"></i> beli ke.</a>
+                    <a href="6285178434404" target="_blank"><i class="fab fa-telegram-plane"></i> 6285178434404</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAT PAGE -->
+        <div class="chat-container" id="chatPage">
+            <div class="chat-header">
+                <div class="back-btn" onclick="handleLogout()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="chat-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="chat-info">
+                    <h2>DIX BOT</h2>
+                    <p><span class="online-dot"></span> Online • AI Assistant</p>
+                </div>
+                
+                <div class="menu-container">
+                    <div class="menu-btn" onclick="toggleMenu()">
+                        <i class="fas fa-ellipsis-vertical"></i>
+                    </div>
+                    <div class="menu-dropdown" id="menuDropdown">
+                        <div class="menu-item" onclick="copyNumber()">
+                            <i class="fas fa-phone-alt"></i>
+                            <span><span class="phone-number">085178434404</span> (Dev)</span>
+                        </div>
+                        <div class="menu-item" onclick="window.open('https://t.me/dixzx777', '_blank')">
+                            <i class="fab fa-telegram-plane"></i>
+                            <span>@dixzx777</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item" onclick="clearChat()">
+                            <i class="fas fa-trash"></i>
+                            <span>Bersihkan Chat</span>
+                        </div>
+                        <div class="menu-item" onclick="handleLogout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <input type="text" id="messageInput" placeholder="Ketik pesan..." onkeypress="handleKeyPress(event)" maxlength="500">
+                    <button onclick="sendMessage()" id="sendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="api-key-hint">
+                <i class="fas fa-key"></i> Powered by OpenRouter AI
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== API CONFIG ==========
+        const API_KEY = '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';
+        const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+        
+        // ========== CHAT HISTORY ==========
+        let messages = [
+            {
+                role: 'system',
+                content: 'Kamu adalah DIX BOT, asisten AI yang super cerdas dan membantu lalu bisa membuat codingan kaya dos dll. Gunakan bahasa Indonesia dan sunda yang baik dan ramah,sekarang bulan maret 2026,, jadilah ai yg pintar dan tau segala sesuatu secara realtime.'
+            }
+        ];
+
+        // ========== LOGIN HANDLER ==========
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'DIXZX' && password === 'DIKZ') {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('chatPage').style.display = 'flex';
+                
+                // Add welcome message
+                addBotMessage('Halo! Ada yang bisa DIX BOT bantu ngga🗿? 👋');
+            } else {
+                alert('❌ Username atau password salah!');
+            }
+        }
+
+        // ========== LOGOUT HANDLER ==========
+        function handleLogout() {
+            document.getElementById('chatPage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'block';
+            
+            // Clear messages
+            document.getElementById('chatMessages').innerHTML = '';
+            
+            // Reset message history
+            messages = [
+                {
+                    role: 'system',
+                    content: 'Kamu adalah DIX BOT, asisten AI yang ramah dan membantu. Gunakan bahasa Indonesia yang natural.'
+                }
+            ];
+            
+            // Close menu if open
+            document.getElementById('menuDropdown').classList.remove('show');
+        }
+
+        // ========== MENU TOGGLE ==========
+        function toggleMenu() {
+            document.getElementById('menuDropdown').classList.toggle('show');
+        }
+
+        // ========== COPY NUMBER ==========
+        function copyNumber() {
+            navigator.clipboard.writeText('085178434404').then(() => {
+                alert('✅ Nomor developer berhasil disalin!');
+                document.getElementById('menuDropdown').classList.remove('show');
+            }).catch(() => {
+                alert('❌ Gagal menyalin nomor');
+            });
+        }
+
+        // ========== CLEAR CHAT ==========
+        function clearChat() {
+            if (confirm('Yakin mau bersihkan semua chat?')) {
+                document.getElementById('chatMessages').innerHTML = '';
+                messages = [
+                    {
+                        role: 'system',
+                        content: 'Kamu adalah DIX BOT, asisten AI yang ramah dan membantu. Gunakan bahasa Indonesia yang natural.'
+                    }
+                ];
+                addBotMessage('Chat telah dibersihkan. Ada yang bisa dibantu? 👋');
+                document.getElementById('menuDropdown').classList.remove('show');
+            }
+        }
+
+        // ========== ADD MESSAGE TO UI ==========
+        function addMessage(content, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            
+            // Simple sanitization
+            const safeContent = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i>
+                </div>
+                <div style="max-width: calc(100% - 44px);">
+                    <div class="message-content">${safeContent}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addBotMessage(content) {
+            addMessage(content, false);
+        }
+
+        function addUserMessage(content) {
+            addMessage(content, true);
+        }
+
+        // ========== SHOW TYPING INDICATOR ==========
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicatorDiv = document.createElement('div');
+            indicatorDiv.className = 'message bot';
+            indicatorDiv.id = 'typingIndicator';
+            
+            indicatorDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            
+            chatMessages.appendChild(indicatorDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        // ========== SEND MESSAGE TO API ==========
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Disable send button
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
+
+            // Add user message to UI
+            addUserMessage(message);
+            
+            // Add to messages array
+            messages.push({
+                role: 'user',
+                content: message
+            });
+
+            // Clear input
+            input.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                // Call OpenRouter API
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'HTTP-Referer': window.location.href,
+                        'X-Title': 'DIX BOT'
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek/deepseek-chat',
+                        messages: messages,
+                        temperature: 0.7,
+                        max_tokens: 1000
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const botReply = data.choices[0].message.content;
+
+                // Remove typing indicator
+                removeTypingIndicator();
+
+                // Add bot reply to UI
+                addBotMessage(botReply);
+
+                // Add to messages array
+                messages.push({
+                    role: 'assistant',
+                    content: botReply
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // Remove typing indicator
+                removeTypingIndicator();
+
+                // Show error message
+                addBotMessage('❌ Maaf, terjadi kesalahan. Cek API key atau coba lagi nanti.');
+            } finally {
+                // Re-enable send button
+                sendBtn.disabled = false;
+            }
+        }
+
+        // ========== ENTER KEY HANDLER ==========
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // ========== CLICK OUTSIDE MENU ==========
+        document.addEventListener('click', function(event) {
+            const menuContainer = document.querySelector('.menu-container');
+            const menuDropdown = document.getElementById('menuDropdown');
+            
+            if (menuContainer && !menuContainer.contains(event.target) && menuDropdown.classList.contains('show')) {
+                menuDropdown.classList.remove('show');
+            }
+        });
+
+        // ========== INITIALIZE ==========
+        console.log('DIX BOT siap digunakan!');
+    </script>
+</body>
+</html>
